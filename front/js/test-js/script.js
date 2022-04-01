@@ -1,28 +1,14 @@
-import Produit from "./produit.js";
 export default class Articles{
+    
         // Récupération des articles de l'API
-    static async getArticles() {
-        
-        
-        let res = await fetch("http://localhost:3000/api/products/" + this.idProduct);
+    static async getArticles() {      
         let articlesRes = await fetch("http://localhost:3000/api/products/");
-        if (articlesRes){
-
-            return articlesRes.json();
-
-        }else if (res){
-            
-            console.log('id', res);
-            return res.json();
-        }
-       
+        return articlesRes.json();
     }
 
         // Répartition des données de l'API dans le DOM
     static async AddOnPage() {
         let articlesRes = Articles.getArticles.articlesRes; 
-        let resultatAPI = await Articles.getArticles(articlesRes);
-        console.log('2', resultatAPI);
         await Articles.getArticles(articlesRes)
         .then(function (resultatAPI){
 

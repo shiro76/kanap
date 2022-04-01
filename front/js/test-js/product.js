@@ -12,8 +12,6 @@ class Produit{
         this.colorPicked = document. querySelector("#colors");
         this.quantityPicked = document.querySelector("#quantity");
 
-        
-        
         fetch("http://localhost:3000/api/products/" + this.idProduct)
         .then((res) => {
             console.log('info', res)

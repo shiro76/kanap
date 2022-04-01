@@ -1,65 +1,31 @@
-import Articles from "./script.js";
-
 export default class Produit{
-    
     // Récupération des articles de l'API    
     static async getArticle() {
         this.str = window.location.href;
         this.url = new URL(this.str);
         this.idProduct = this.url.searchParams.get("id");
-        Articles.getArticles();
-        let resultatAPI = Articles.res;
-        console.log(resultatAPI);
+        console.log(this.idProduct);
         let article = "";
-        
+
         this.colorPicked = document. querySelector("#colors");
         this.quantityPicked = document.querySelector("#quantity");
         
-        
-        // Répartition des données de l'API dans le DOM
-        // async function res (resultatAPI) {
-        //     article = await resultatAPI;
-        //     JSON.parse.article;
-        //     console.table(article);
-        //     if (article){
-        //         Produit.generatePost(article);
-        //         Produit.addToCart(article);
-        //     }
-        // }res(resultatAPI);
-        
-        try{
-            
-        //    resultatAPI = async function(resultatAPI) {
-        //         article = await resultatAPI;
-        //         console.table(article);
-        //         if (article){
-        //             Produit.generatePost(article);
-        //             Produit.addToCart(article);
-        //         }
-        //     }
-
-
-        }catch(error) {
-            console.error("Erreur de la requête API", error);
+        try {
+            const response = await fetch(`http://localhost:3000/api/products/${this.idProduct}`);
+            article = await response.json();
+            console.table(article)
+            //repartition des données dans le DOM
+            if(article){
+                Produit.generatePost(article);
+                Produit.addToCart(article);
+            }
+            }catch (error) {
+                console.log('erreur API', error);
         }
-
-       
-        // if(articleRes){
-        //     let resultatAPI = await articleRes;
-        //     console.log('3', resultatAPI);
-        //     article = await resultatAPI;
-        //     console.table(article);
-        // if(article){
-        //     Produit.generatePost(article);
-        //     Produit.addToCart(article);
-        // }
-
-        // }
-        
-        
     }
     // Répartition des données de l'API dans le DOM
     static generatePost(article){
+        
         // Insertion de l'image
         let productImg = document.createElement("img");
         document.querySelector(".item__img").appendChild(productImg);
@@ -88,7 +54,6 @@ export default class Produit{
         }
         
     }
-
     //Gestion du panier
     static addToCart(article) {
         const btn_envoyerPanier = document.querySelector("#addToCart");
@@ -158,16 +123,7 @@ export default class Produit{
     }
 }
 
-
-try{
-    init();
-}
-
-catch (error) {
-    console.error("Erreur de la requête API", error);
-}
-
 async function init(){
     Produit.getArticle();
-}
+}init();
 
